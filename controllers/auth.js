@@ -49,8 +49,6 @@ export const login = async (req, res) => {
 
         const user = await User.findOne({ username });
 
-        console.log(user);
-
         if(!user) {
             return res.json({
                 message: "Undefined user."
