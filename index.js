@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import authRoute from "./routes/auth.js";
+import characterRoute from "./routes/character.js";
 
 const app = express();
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoute);
+app.use('/api/characters', characterRoute);
 
 async function start() {
     try {
