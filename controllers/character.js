@@ -26,3 +26,12 @@ export const createCharacter = async (req, res) => {
         });
     }
 }
+
+export const getAll = async (req, res) => {
+    try {
+        const characters = await Character.find();
+        res.json({ characters })
+    } catch (error) {
+        res.json({ message: 'Что-то пошло не так.' })
+    }
+}
