@@ -35,3 +35,32 @@ export const getAll = async (req, res) => {
         res.json({ message: 'Что-то пошло не так.' })
     }
 }
+
+export const getMyCharacters = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+        const characters = await Promise.all(
+            user.characters.map((character)=>{
+                return Character.findById(character._id);
+            })
+        )
+        res.json({ characters })
+    } catch (error) {
+        res.json({ message: 'Что-то пошло не так.' })
+    }
+}
+
+export const deleteCharacters = async (req, res) => {
+    try {
+        const character = Character.findByIdAndDelete(req.params.id);
+        if(!character) return res.json({message: 'Character is not exist.'});
+
+        await User.findByIdAndUpdate(req.userId, {
+            $pull: {characters: req.params.id}
+        });
+
+        res.json({message: 'Successful'}); 
+    } catch (error) {
+        res.json({ message: 'Что-то пошло не так.' })
+    }
+}
