@@ -52,14 +52,17 @@ export const getMyCharacters = async (req, res) => {
 
 export const deleteCharacters = async (req, res) => {
     try {
-        const character = Character.findByIdAndDelete(req.params.id);
-        if(!character) return res.json({message: 'Character is not exist.'});
+        Character.findByIdAndRemove(req.params.id, (err, doc) => {
+            if (err) {
+                console.log(err);
+            }
+        });
 
         await User.findByIdAndUpdate(req.userId, {
             $pull: {characters: req.params.id}
         });
 
-        res.json({message: 'Successful'}); 
+        res.json({ message: 'Successful' }); 
     } catch (error) {
         res.json({ message: 'Что-то пошло не так.' })
     }
