@@ -62,7 +62,7 @@ export const deleteCharacters = async (req, res) => {
             $pull: {characters: req.params.id}
         });
 
-        res.json({ message: 'Successful' }); 
+        res.json({ message: 'Successful', id: req.params.id });
     } catch (error) {
         res.json({ message: 'Что-то пошло не так.' })
     }
