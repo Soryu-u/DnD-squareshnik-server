@@ -7,10 +7,6 @@ export const createCharacter = async (req, res) => {
         const user = await User.findById(req.userId);
 
         const newCharacter = new Character({
-            username: user.username,
-            name,
-            level,
-            race,
             author: req.userId,
         });
         await newCharacter.save();
